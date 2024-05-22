@@ -1,0 +1,16 @@
+<odoo>
+    <menuitem
+            id="property_root_menu"
+            name="Properties App"
+    />
+    <menuitem
+            id="property_menu"
+            name="Properties"
+            parent="property_root_menu"
+    />
+    <menuitem
+            id="configration_menu"
+            name="Configration"
+            parent="property_root_menu"
+    />
+</odoo>

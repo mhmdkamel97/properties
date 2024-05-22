@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_property,access_property,model_property,properties.property_manager_group,1,1,1,1
+access_property_owner,access_property_owner,model_property_owner,,1,1,1,1
+access_tags,access_tags,model_tags,,1,1,1,1
+access_property_line,access_property_line,model_property_line,,1,1,1,1

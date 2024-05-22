@@ -1,0 +1,122 @@
+<odoo>
+    <record id="property_tree_view" model="ir.ui.view">
+        <field name="name">property_tree_view</field>
+        <field name="model">property</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="property_owner_id"/>
+                <field name="tags_ids" widget="many2many_tags"/>
+                <field name="description"/>
+                <field name="date_availability"/>
+                <field name="selling_price"/>
+                <field name="discount"/>
+                <field name="new_price"/>
+                <field name="bedrooms"/>
+                <field name="garden"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="property_form_view" model="ir.ui.view">
+        <field name="name">property_form_view</field>
+        <field name="model">property</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <header>
+                        <button name="draft_action" type="object" string="Draft" class="btn-primary"/>
+                        <button name="pending_action" type="object" string="Pending" class="btn-secondary"/>
+                        <button name="sold_action" type="object" string="Sold" class="btn-success"/>
+                        <button name="closed_action" type="object" string="Closed" class="btn-info"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="sequence"/>
+                        </h1>
+                        <label for="name"/>
+                        <h2>
+                            <field name="name"/>
+                        </h2>
+                    </div>
+                    <group string="Property Details">
+                        <group>
+                            <field name="property_owner_id"/>
+                            <field name="owner_address"/>
+                            <field name="owner_phone"/>
+                            <field name="description"/>
+                            <field name="selling_price"/>
+                            <field name="discount"/>
+                            <field name="new_price"/>
+                        </group>
+                        <group>
+                            <field name="tags_ids" widget="many2many_tags"/>
+                            <field name="bedrooms"/>
+                            <field name="garden"/>
+                            <field name="date_availability"/>
+                            <field name="state"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Bedrooms">
+                            <field name="line_ids">
+                                <tree editable="bottom">
+                                    <field name="description"/>
+                                    <field name="area"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+
+
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                    <field name="activity_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="property_search_view" model="ir.ui.view">
+        <field name="name">property_search_view</field>
+        <field name="model">property</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="bedrooms"/>
+
+                <filter name="garden_available" string="garden available" domain="[('garden','=','True')]"/>
+                <filter name="garden_not_available" string="garden not available" domain="[('garden','!=','True')]"/>
+
+                <filter name="group_by_garden" string="garden" context="{'group_by':'garden'}"/>
+                <filter name="group_by_bedrooms" string="bedrooms" context="{'group_by':'bedrooms'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="closed_action_server" model="ir.actions.server">
+        <field name="name">Closed</field>
+        <field name="model_id" ref="model_property"/>
+        <field name="binding_model_id" ref="model_property"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.closed_action()
+        </field>
+    </record>
+
+    <record id="property_action" model="ir.actions.act_window">
+        <field name="name">Property</field>
+        <field name="res_model">property</field>
+    </record>
+    <menuitem
+            id="property_menu_item"
+            name="properties"
+            parent="property_menu"
+            action="property_action"
+    />
+</odoo>
